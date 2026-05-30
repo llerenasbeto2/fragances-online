@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 
 class LogoutController extends Controller
 {
@@ -13,7 +14,8 @@ class LogoutController extends Controller
     public function __invoke(Request $request)
     {
         try{
-            auth()->logout();
+            //auth()->logout();
+            auth('api')->logout();
             return response()->json(['message' => 'Successfully logged out']);
 
         }catch(JWTException $exception){

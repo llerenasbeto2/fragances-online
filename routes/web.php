@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FragranceController;
 use Inertia\Inertia;
 /*
 Route::get('/', function () {
@@ -37,11 +38,29 @@ Route::get('/login', function () {
 });
 
 
-Route::get('/admin/dashboard', function () {
-    return Inertia::render('Auth/Admin/Dashboard');
-});
-
 
 Route::get('/user/dashboard', function () {
     return Inertia::render('User/Dashboard');
+})->middleware('role:user');
+
+Route::get('/admin/dashboard', function () {
+    return Inertia::render('Auth/Admin/Dashboard');
+})->middleware('role:admin');
+
+
+Route::middleware('role:admin')->group(function () {
+    Route::get('/admin/fragrances', [FragranceController::class, 'index'])->name('admin.fragrances.index');
+    Route::get('/admin/fragrances/create', [FragranceController::class, 'create'])->name('admin.fragrances.create');
+    Route::post('/admin/fragrances', [FragranceController::class, 'store'])->name('admin.fragrances.store');
+    Route::get('/admin/fragrances/{fragrance}/edit', [FragranceController::class, 'edit'])->name('admin.fragrances.edit');
+    Route::put('/admin/fragrances/{fragrance}', [FragranceController::class, 'update'])->name('admin.fragrances.update');
+    Route::delete('/admin/fragrances/{fragrance}', [FragranceController::class, 'destroy'])->name('admin.fragrances.destroy');
 });
+
+/*
+Route::get('/admin/fragrances', [FragranceController::class, 'index'])->name('admin.fragrances.index');
+Route::get('/admin/fragrances/create', [FragranceController::class, 'create'])->name('admin.fragrances.create');
+Route::post('/admin/fragrances', [FragranceController::class, 'store'])->name('admin.fragrances.store');
+Route::get('/admin/fragrances/{fragrance}/edit', [FragranceController::class, 'edit'])->name('admin.fragrances.edit');
+Route::put('/admin/fragrances/{fragrance}', [FragranceController::class, 'update'])->name('admin.fragrances.update');
+Route::delete('/admin/fragrances/{fragrance}', [FragranceController::class, 'destroy'])->name('admin.fragrances.destroy');*/

@@ -13,12 +13,39 @@ class CheckRole
      *
      * @param  Closure(Request): (Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role)
-    {
-        if (!$request->user() || $request->user()->role !== $role) {
-            return response()->json(['error' => 'Unauthorized. Insufficient permissions.'], 403);
+    public function handle(Request $request, Closure $next, string $role): Response 
+      {
+        try {
+        // Forzar que JWT lea el token del header Authorization
+        $token = $request->bearerToken();
+        
+        if (!$token) {
+            return $request->expectsJson()
+                ? response()->json(['error' => 'Unauthorized'], 401)
+                : redirect('/login');
         }
 
-        return $next($request);
+        // Autenticar con el token
+        $user = auth('api')->setToken($token)->authenticate();
+
+        if (!$user) {
+            return $request->expectsJson()
+                ? response()->json(['error' => 'Unauthorized'], 401)
+                : redirect('/login');
+        }
+
+        if ($user->role !== $role) {
+            return $request->expectsJson()
+                ? response()->json(['error' => 'Forbidden'], 403)
+                : redirect('/login');
+        }
+
+    } catch (\Exception $e) {
+        return $request->expectsJson()
+            ? response()->json(['error' => 'Unauthorized'], 401)
+            : redirect('/login');
+    }
+
+    return $next($request);
     }
 }
