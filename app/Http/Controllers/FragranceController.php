@@ -41,6 +41,7 @@ class FragranceController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'concentration' => 'required|in:EDT,EDP,Parfum,Elixir',
+            'image_url' => 'nullable|url|max:500',
         ]);
 
         Fragrance::create($validated);
@@ -71,6 +72,7 @@ class FragranceController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'concentration' => 'required|in:EDT,EDP,Parfum,Elixir',
+            'image_url' => 'nullable|url|max:500',
         ]);
 
         $fragrance->update($validated);
