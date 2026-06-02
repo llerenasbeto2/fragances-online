@@ -4,7 +4,9 @@ Tienda en línea especializada en perfumes y fragancias, desarrollada como proye
 
 🔗 **Demo en vivo:** [fragances-online-production.up.railway.app](https://fragances-online-production.up.railway.app/)  
 📁 **Repositorio:** [github.com/llerenasbeto2/fragances-online](https://github.com/llerenasbeto2/fragances-online)  
-📖 **Documentación técnica (DeepWiki):** disponible en el repositorio
+📖 **Documentación técnica (DeepWiki):** disponible en el repositorio 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/llerenasbeto2/fragances-online)
+
 
 ---
 
